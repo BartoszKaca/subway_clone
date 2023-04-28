@@ -12,7 +12,4 @@ ground = Entity(model = 'plane', texture = 'tracks.png', collider = 'mesh', scal
 train = train_generator(player)
 #plus = Entity(model = 'cube', texture = 'brick', scale = (10,10,20), collider = 'box', position = (0,0,0))
 Sky()
-print()
-def update():
-    print(distance_z(player, train), distance_y(player,train), distance_x(player, train))
 app.run()
