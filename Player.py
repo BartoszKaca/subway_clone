@@ -29,7 +29,7 @@ class Player(Entity):
 
     def input(self, key):
         if key == 'space' or key == 'scroll up' or key =='scroll down':
-            if(self.y<1):
+            if(self.y<1 or self.y ==5 and self.air_time ==0):
                  self.jump()
         if key == 'a' or key =='left mouse down':
             if (self.x==0 or self.x==20 or self.x==-20):
