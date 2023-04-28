@@ -3,7 +3,7 @@ from random import *
 from GameParameters import *
 tablica = [0,0,0]
 def train_generator():
-    for x in range(random.randrange(0,4)):
+    for x in range(random.randrange(1,4)):
             index = random.randrange(0,3)
             match index:
                 case 0:
