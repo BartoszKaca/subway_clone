@@ -13,3 +13,5 @@ def distance_y(a,b):
     return sqrt((b[1]-a[1])**2)
 class GameParameters():
     speed = 1
+    paused = False
+    can_spawn = True

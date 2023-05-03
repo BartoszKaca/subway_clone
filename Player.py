@@ -1,7 +1,9 @@
 from ursina import *
+from GameParameters import *
 class Player(Entity):
     def __init__(self, **kwargs):
         super().__init__()
+        self.paused = False
         self.height = 1
         self.gravity = 1
         self.grounded = 0
@@ -26,6 +28,7 @@ class Player(Entity):
             self.air_time = 0
             self.y = 0
             self.grav_test = 0
+        self.paused = GameParameters.paused
 
     def input(self, key):
         if key == 'space' or key == 'scroll up' or key =='scroll down':
@@ -56,6 +59,3 @@ class Player(Entity):
         if(self.x>=0):
             self.animate_x(self.x-20, duration = .1)
 
-if __name__=='__main__':
-    ground = Entity(model='plane', texture='grass', collider='mesh', scale=(100, 1, 100))
-    player = Player(x = 2)
