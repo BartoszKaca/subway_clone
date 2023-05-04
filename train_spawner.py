@@ -1,7 +1,7 @@
 from Train import *
 from random import *
 from GameParameters import *
-tablica = [0,0,0]
+
 def train_generator(player):
     if(GameParameters.paused == False):
         for x in range(random.randrange(1,4)):
