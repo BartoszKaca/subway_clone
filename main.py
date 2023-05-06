@@ -7,8 +7,8 @@ from train_spawner import *
 from Menu import *
 
 app = Ursina()
-#main_menu = Menu()
 player = Player(collider = 'box',model = 'cube', position = (0, 0, 0))
+main_menu = Menu(player)
 ground = Entity(model = 'plane', texture = 'tracks.png', collider = 'mesh', scale = (60, 1, 100), position = (0,0,50))
 def update():
     if(GameParameters.can_spawn == True):

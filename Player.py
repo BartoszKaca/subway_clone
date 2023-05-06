@@ -31,18 +31,19 @@ class Player(Entity):
         self.paused = GameParameters.paused
 
     def input(self, key):
-        if key == 'space' or key == 'scroll up' or key =='scroll down':
-            if(self.y<1 or self.y ==5 and self.air_time ==0):
-                 self.jump()
-        if key == 'a' or key =='left mouse down':
-            if (self.x==0 or self.x==20 or self.x==-20):
-                self.move_left()
-        if key == 'd' or key =='right mouse down':
-            if (self.x == 0 or self.x == 20 or self.x == -20):
-                self.move_right()
+        if(self.paused == False):
+            if key == 'space' or key == 'scroll up' or key =='scroll down':
+                if(self.y<1 or self.y ==5 and self.air_time ==0):
+                     self.jump()
+            if key == 'a' or key =='left mouse down':
+                if (self.x==0 or self.x==20 or self.x==-20):
+                    self.move_left()
+            if key == 'd' or key =='right mouse down':
+                if (self.x == 0 or self.x == 20 or self.x == -20):
+                    self.move_right()
 
     def jump(self):
-        self.animate_y(self.y + 20,duration=.25)
+        self.animate_y(self.y + 10,duration=.25)
 
     def start_fall(self):
         self.y_animator.pause()
