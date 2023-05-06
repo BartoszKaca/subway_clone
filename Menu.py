@@ -24,8 +24,21 @@ class Menu(Entity):
         for key in self.buttons.keys():
             self.buttons[key].disable()
         back = Button(text = 'wroc do menu',position = (-0.65, .4), scale = (.4,.1), color = color.black)
+        desc = ("Sterowanie:\n"
+                "ruch w prawo: D lub Prawy Przycisk Myszki\n"
+                "ruch w lewo: A lub Lewy Przycisk Myszki\n"
+                "Skok: Spacja, Scroll w górę lub w dół\n")
+        te = Text(desc, width = 8, height = 6, position = (-.3, .4))
+        te.create_background()
+        back.on_click= lambda: Func(self.return_menu(player, back,te))
+    def return_menu(self, player, back, te):
+        back.disable()
+        te.disable()
+        self.show_menu(player)
+
+
     def show_menu(self, player):
-        player.rotation=(180,0,0)
+        player.rotation = (180, 0, 0)
         GameParameters.paused = True
         for key in self.buttons.keys():
             self.buttons[key].enable()
