@@ -6,7 +6,7 @@ class Menu(Entity):
         super().__init__(parent = camera.ui, ignore_paused = True)
         self.main_menu = Entity(parent = self)
         self.help_menu = Entity(parent = self)
-        self.background = Sprite('menu_background.png', z = -8.9,y =-1, rotation = (180,0,0))
+        self.background = Sprite('assets/menu_background.png', z = -8.9,y =-1, rotation = (180,0,0))
         player.rotation = (180,0,0)
         self.buttons = {
             'start':Button(text= 'start', scale = (.4,.1), position = (-.65, .15),color = color.black),

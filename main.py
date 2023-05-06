@@ -9,7 +9,7 @@ from Menu import *
 app = Ursina()
 player = Player(collider = 'box',model = 'cube', position = (0, 0, 0))
 main_menu = Menu(player)
-ground = Entity(model = 'plane', texture = 'tracks.png', collider = 'mesh', scale = (60, 1, 100), position = (0,0,50))
+ground = Entity(model = 'plane', texture = 'assets/tracks.png', collider = 'mesh', scale = (60, 1, 100), position = (0,0,50))
 def update():
     if(GameParameters.can_spawn == True):
         train = train_generator(player)
