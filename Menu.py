@@ -4,8 +4,6 @@ from GameParameters import *
 class Menu(Entity):
     def __init__(self, player, **kwargs):
         super().__init__(parent = camera.ui, ignore_paused = True)
-        self.main_menu = Entity(parent = self)
-        self.help_menu = Entity(parent = self)
         self.background = Sprite('assets/menu_background.png', z = -8.9,y =-1, rotation = (180,0,0))
         player.rotation = (180,0,0)
         self.buttons = {
@@ -25,6 +23,7 @@ class Menu(Entity):
     def kontrole(self,player):
         for key in self.buttons.keys():
             self.buttons[key].disable()
+        back = Button(text = 'wroc do menu',position = (-0.65, .4), scale = (.4,.1), color = color.black)
     def show_menu(self, player):
         player.rotation=(180,0,0)
         GameParameters.paused = True
