@@ -19,8 +19,10 @@ class Menu(Entity):
 
     def close_menu(self, player):
         player.rotation=(0,0,0)
+        GameParameters.speed = 20
         GameParameters.paused = False
-        GameParameters.score = 20
+        GameParameters.score = 0
+        GameParameters.can_spawn = True
         self.score_point.enable()
         for key in self.buttons.keys():
             self.buttons[key].disable()
@@ -40,20 +42,27 @@ class Menu(Entity):
         back.disable()
         te.disable()
         self.show_menu(player)
+
+    def return_menu(self, player, back, te, restart):
+        back.disable()
+        te.disable()
+        restart.disable()
+        self.show_menu(player)
     def death_menu(self, player):
+        GameParameters.death = False
         player.position = (0,0,0)
         player.rotation = (180,0,0)
         back = Button(text = 'wroc do menu',position = (-0.65, .4), scale = (.4,.1), color = color.black)
+        restart = Button(text= 'restart', scale = (.4,.1), position = (-.65, .15),color = color.black)
         self.score_point.disable()
         desc = (
             "Game Over!\n"
             'Score: ' + str(GameParameters.score)
         )
         te = Text(desc, width=10, height=2,origin=(0,0), position = (0,0.2))
+        restart.on_click = lambda: Func(GameParameters.restart(GameParameters, player, self, te, back, restart))
         te.create_background()
-        self.buttons['start'].enable()
-        back.on_click = lambda: Func(self.return_menu(player, back,te))
-
+        back.on_click = lambda: Func(self.return_menu(player,te, back, restart))
 
     def show_menu(self, player):
         player.rotation = (180, 0, 0)

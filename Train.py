@@ -22,9 +22,11 @@ class Train(Entity):
         if self.z < 70 and self.changed == False:
             self.changed = True
             GameParameters.can_spawn = True
+        if GameParameters.death == True:
+            self.disable()
 
     def hit_info(self, player):
-        if (player.x == self.x and distance_z(player, self) <= 10 and distance_y(player, self) < 5):
+        if (player.x == self.x and distance_z(player, self) <= 10 and distance_y(player, self) < 5 and GameParameters.paused == False):
             print("game over")
             GameParameters.paused = True
             GameParameters.death = True

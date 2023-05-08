@@ -11,9 +11,21 @@ def distance_y(a,b):
     if hasattr(a, 'position'): a = a.position
     if hasattr(b, 'position'): b = b.position
     return sqrt((b[1]-a[1])**2)
+
 class GameParameters():
     speed = 20
     paused = True
     can_spawn = True
     score = 0
     death = False
+    def restart(self, player, menu, back, te, restart):
+        self.score = 0
+        self.paused = False
+        self.can_spawn = True
+        self.speed = 20
+        player.position = (0,0,0)
+        player.rotation = (0,0,0)
+        back.disable()
+        te.disable()
+        restart.disable()
+        menu.score_point.enable()

@@ -1,3 +1,4 @@
+import GameParameters
 from ursina import *
 from Player import *
 from Train import *
