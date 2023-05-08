@@ -12,6 +12,8 @@ def distance_y(a,b):
     if hasattr(b, 'position'): b = b.position
     return sqrt((b[1]-a[1])**2)
 class GameParameters():
-    speed = 1
+    speed = 20
     paused = True
     can_spawn = True
+    score = 0
+    death = False

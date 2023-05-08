@@ -12,22 +12,27 @@ class Menu(Entity):
             'wyjdź':Button(text='wyjdź', scale = (.4,.1), position = (-.65,-.15), color=color.black)
         }
         self.buttons['start'].on_click=lambda:Func(self.close_menu(player))
-        self.buttons['sterowanie'].on_click=lambda :Func(self.kontrole(player))
+        self.buttons['sterowanie'].on_click=lambda :Func(self.controls(player))
         self.buttons['wyjdź'].on_click=lambda:application.quit()
+        self.score_point = Text('Score:' + str(GameParameters.score), width=10, height=2, position=(.5, .4))
+        self.score_point.disable()
 
     def close_menu(self, player):
         player.rotation=(0,0,0)
         GameParameters.paused = False
+        GameParameters.score = 20
+        self.score_point.enable()
         for key in self.buttons.keys():
             self.buttons[key].disable()
-    def kontrole(self,player):
+    def controls(self,player):
         for key in self.buttons.keys():
             self.buttons[key].disable()
         back = Button(text = 'wroc do menu',position = (-0.65, .4), scale = (.4,.1), color = color.black)
         desc = ("Sterowanie:\n"
                 "ruch w prawo: D lub Prawy Przycisk Myszki\n"
                 "ruch w lewo: A lub Lewy Przycisk Myszki\n"
-                "Skok: Spacja, Scroll w górę lub w dół\n")
+                "Skok: Spacja, Scroll w górę lub w dół\n"
+                "Wyjście do menu: Esc")
         te = Text(desc, width = 8, height = 6, position = (-.3, .4))
         te.create_background()
         back.on_click= lambda: Func(self.return_menu(player, back,te))
@@ -35,6 +40,19 @@ class Menu(Entity):
         back.disable()
         te.disable()
         self.show_menu(player)
+    def death_menu(self, player):
+        player.position = (0,0,0)
+        player.rotation = (180,0,0)
+        back = Button(text = 'wroc do menu',position = (-0.65, .4), scale = (.4,.1), color = color.black)
+        self.score_point.disable()
+        desc = (
+            "Game Over!\n"
+            'Score: ' + str(GameParameters.score)
+        )
+        te = Text(desc, width=10, height=2,origin=(0,0), position = (0,0.2))
+        te.create_background()
+        self.buttons['start'].enable()
+        back.on_click = lambda: Func(self.return_menu(player, back,te))
 
 
     def show_menu(self, player):

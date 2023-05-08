@@ -1,3 +1,5 @@
+import GameParameters
+
 from ursina import *
 from GameParameters import *
 from Player import *
@@ -14,7 +16,7 @@ class Train(Entity):
             setattr(self, key, value)
     def update(self):
         if(self.z >-20 and self.paused == False):
-            self.z -= time.dt * 20 * GameParameters.speed
+            self.z -= time.dt * GameParameters.speed
         self.hit_info(self.player_info)
         self.paused = GameParameters.paused
         if self.z < 70 and self.changed == False:
@@ -24,6 +26,8 @@ class Train(Entity):
     def hit_info(self, player):
         if (player.x == self.x and distance_z(player, self) <= 10 and distance_y(player, self) < 5):
             print("game over")
+            GameParameters.paused = True
+            GameParameters.death = True
         elif (player.x == self.x and distance_z(player, self) <= 10 and distance_y(player, self) >= 5):
             if (player.y <= 6):
                 player.grav_test = 0
