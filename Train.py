@@ -9,8 +9,7 @@ class Train(Entity):
         super().__init__()
         self.paused = False
         self.changed = False
-        self.model = 'cube'
-        self.texture = 'brick'
+        self.model = '/assets/wagon.glb'
         self.collider = BoxCollider(self, center=Vec3(0,0,0), size=Vec3(10,10,20))
         for key, value in kwargs.items():
             setattr(self, key, value)
