@@ -6,12 +6,18 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.prefabs.editor_camera import *
 from train_spawner import *
 from Menu import *
+from screeninfo import get_monitors
 
-app = Ursina(borderless = False)
-window.size = Vec2(1100, 600)
+
+monitor = get_monitors()
+app = Ursina( fullscreen = True)
+window.size = Vec2(monitor[0].width, monitor[0].height)
+window.fps_counter.disable()
 player = Player(collider = 'box',model = 'cube', position = (0, 0, 0))
 main_menu = Menu(player)
 ground = Entity(model = '/assets/tracks.glb', collider = 'box', scale = 0.67, position = (0,-7,50))
+scene.fog_density = .001
+scene.fog_color = color.black
 
 
 def update():

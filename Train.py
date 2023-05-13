@@ -14,30 +14,30 @@ class Train(Entity):
         for key, value in kwargs.items():
             setattr(self, key, value)
     def update(self):
-        if(self.z <= -50):
+        if self.z <= -100:
             self.disable()
-        if(self.z >-50 and self.paused == False):
+        if self.paused == False:
             self.z -= time.dt * GameParameters.speed
         self.hit_info(self.player_info)
         self.paused = GameParameters.paused
-        if self.z < 70 and self.changed == False:
+        if self.z < 350 and self.changed == False:
             self.changed = True
             GameParameters.can_spawn = True
         if GameParameters.death:
             self.disable()
 
     def hit_info(self, player):
-        if (player.x == self.x and distance_z(player, self) <= 100 and distance_y(player, self) < 5 and GameParameters.paused == False):
+        if (player.x == self.x and distance_z(player, self) <= 65 and distance_y(player, self) < 5 and GameParameters.paused == False):
             print("game over")
             self.disable()
             GameParameters.paused = True
             GameParameters.death = True
-        elif (player.x == self.x and distance_z(player, self) <= 100 and distance_y(player, self) >= 5):
+        elif (player.x == self.x and distance_z(player, self) <= 65 and distance_y(player, self) >= 5):
             if (player.y <= 8):
                 player.grav_test = 0
                 player.y = 7
                 player.air_time = 0
-        elif (player.x == self.x and distance_z(player, self) > 100 and distance_y(player, self) >= 5):
+        elif (player.x == self.x and distance_z(player, self) > 65 and distance_y(player, self) >= 5):
             player.grav_test = 1
         if (player.x != self.x and player.y == 7 and player.grav_test == 0):
             player.grav_test = 1

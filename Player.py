@@ -33,7 +33,7 @@ class Player(Entity):
     def input(self, key):
         if(self.paused == False):
             if key == 'space' or key == 'scroll up' or key =='scroll down':
-                if(self.y<1 or self.y ==5 and self.air_time ==0 ):
+                if(self.y<1 or self.y ==7 and self.air_time ==0 ):
                      self.jump()
             if key == 'a' or key =='left mouse down':
                 if (self.x==0 or self.x==20 or self.x==-20):
@@ -43,7 +43,7 @@ class Player(Entity):
                     self.move_right()
 
     def jump(self):
-        self.animate_y(self.y + 15,duration=.25)
+        self.animate_y(self.y + 15,duration=.4)
     def move_right(self):
         if(self.x<=0):
             self.animate_x(self.x +20,duration = .1)
