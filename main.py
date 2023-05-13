@@ -13,6 +13,7 @@ player = Player(collider = 'box',model = 'cube', position = (0, 0, 0))
 main_menu = Menu(player)
 ground = Entity(model = '/assets/tracks.glb', collider = 'box', scale = 0.67, position = (0,-7,50))
 
+
 def update():
     print(player.position)
     if GameParameters.death == True:

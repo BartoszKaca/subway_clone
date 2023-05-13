@@ -10,11 +10,13 @@ class Train(Entity):
         self.paused = False
         self.changed = False
         self.model = '/assets/wagon.glb'
-        self.collider = BoxCollider(self, center=Vec3(0,0,0), size=Vec3(10,10,20))
+        self.collider = BoxCollider(self, center=Vec3(0,0,0), size=Vec3(10,10,50))
         for key, value in kwargs.items():
             setattr(self, key, value)
     def update(self):
-        if(self.z >-20 and self.paused == False):
+        if(self.z <= -50):
+            self.disable()
+        if(self.z >-50 and self.paused == False):
             self.z -= time.dt * GameParameters.speed
         self.hit_info(self.player_info)
         self.paused = GameParameters.paused
@@ -25,17 +27,17 @@ class Train(Entity):
             self.disable()
 
     def hit_info(self, player):
-        if (player.x == self.x and distance_z(player, self) <= 10 and distance_y(player, self) < 5 and GameParameters.paused == False):
+        if (player.x == self.x and distance_z(player, self) <= 100 and distance_y(player, self) < 5 and GameParameters.paused == False):
             print("game over")
             self.disable()
             GameParameters.paused = True
             GameParameters.death = True
-        elif (player.x == self.x and distance_z(player, self) <= 10 and distance_y(player, self) >= 5):
-            if (player.y <= 6):
+        elif (player.x == self.x and distance_z(player, self) <= 100 and distance_y(player, self) >= 5):
+            if (player.y <= 8):
                 player.grav_test = 0
-                player.y = 5
+                player.y = 7
                 player.air_time = 0
-        elif (player.x == self.x and distance_z(player, self) > 10 and distance_y(player, self) >= 5):
+        elif (player.x == self.x and distance_z(player, self) > 100 and distance_y(player, self) >= 5):
             player.grav_test = 1
-        if (player.x != self.x and player.y == 5 and player.grav_test == 0):
+        if (player.x != self.x and player.y == 7 and player.grav_test == 0):
             player.grav_test = 1
