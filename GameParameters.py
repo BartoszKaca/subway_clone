@@ -18,9 +18,11 @@ class GameParameters():
     can_spawn = True
     score = 0
     death = False
+
     def restart(self, player, menu, objects):
         self.score = 0
-        self.paused = False
+        self.paused = True
+        self.death = True
         self.can_spawn = True
         self.speed = 20
         player.position = (0,0,0)

@@ -67,3 +67,4 @@ class Menu(Entity):
         GameParameters.paused = True
         for key in self.buttons.keys():
             self.buttons[key].enable()
+    def pause_menu(self, player):

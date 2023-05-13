@@ -16,13 +16,12 @@ window.fps_counter.disable()
 player = Player(collider = 'box',model = 'cube', position = (0, 0, 0))
 main_menu = Menu(player)
 ground = Entity(model = '/assets/tracks.glb', collider = 'box', scale = 0.67, position = (0,-7,50))
-scene.fog_density = .001
-scene.fog_color = color.black
 
 
+#TODO pause menu, init train generator
 def update():
     print(player.position)
-    if GameParameters.death == True:
+    if GameParameters.death == True and GameParameters.paused == False:
         main_menu.death_menu(player)
     if GameParameters.paused == False:
         GameParameters.score += int(time.dt * 100)
