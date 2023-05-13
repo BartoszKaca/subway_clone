@@ -37,16 +37,11 @@ class Menu(Entity):
                 "Wyjście do menu: Esc")
         te = Text(desc, width = 8, height = 6, position = (-.3, .4))
         te.create_background()
-        back.on_click= lambda: Func(self.return_menu(player, back,te))
-    def return_menu(self, player, back, te):
-        back.disable()
-        te.disable()
-        self.show_menu(player)
-
-    def return_menu(self, player, back, te, restart):
-        back.disable()
-        te.disable()
-        restart.disable()
+        objects = (te,back)
+        back.on_click= lambda: Func(self.return_menu(player, objects))
+    def return_menu(self, player, objects):
+        for i in objects:
+            i.disable()
         self.show_menu(player)
     def death_menu(self, player):
         GameParameters.death = False
@@ -62,9 +57,10 @@ class Menu(Entity):
             'Score: ' + str(GameParameters.score)
         )
         te = Text(desc, width=10, height=2,origin=(0,0), position = (0,0.2))
-        restart.on_click = lambda: Func(GameParameters.restart(GameParameters, player, self, te, back, restart))
+        objects = (te, back, restart)
+        back.on_click = lambda: Func(self.return_menu(player,objects))
+        restart.on_click = lambda: Func(GameParameters.restart(GameParameters, player, self,objects))
         te.create_background()
-        back.on_click = lambda: Func(self.return_menu(player,te, back, restart))
 
     def show_menu(self, player):
         player.rotation = (180, 0, 0)

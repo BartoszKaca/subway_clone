@@ -18,14 +18,13 @@ class GameParameters():
     can_spawn = True
     score = 0
     death = False
-    def restart(self, player, menu, back, te, restart):
+    def restart(self, player, menu, objects):
         self.score = 0
         self.paused = False
         self.can_spawn = True
         self.speed = 20
         player.position = (0,0,0)
         player.rotation = (0,0,0)
-        back.disable()
-        te.disable()
-        restart.disable()
+        for i in objects:
+            i.disable()
         menu.score_point.enable()
