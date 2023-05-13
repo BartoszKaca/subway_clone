@@ -50,6 +50,8 @@ class Menu(Entity):
         self.show_menu(player)
     def death_menu(self, player):
         GameParameters.death = False
+        GameParameters.paused = True
+        player.air_time = 0
         player.position = (0,0,0)
         player.rotation = (180,0,0)
         back = Button(text = 'wroc do menu',position = (-0.65, .4), scale = (.4,.1), color = color.black)
