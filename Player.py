@@ -1,4 +1,5 @@
 from ursina import *
+
 from GameParameters import *
 class Player(Entity):
     def __init__(self, **kwargs):
@@ -14,6 +15,7 @@ class Player(Entity):
         self.air_time = 0
         self.grav_test = 0
         self.collider = BoxCollider(self, center=Vec3(0,0,0), size=Vec3(1,1,1))
+        self.menu = None
         for key, value in kwargs.items():
             setattr(self, key, value)
     def update(self):
@@ -41,6 +43,8 @@ class Player(Entity):
             if key == 'd' or key =='right mouse down':
                 if (self.x == 0 or self.x == 20 or self.x == -20):
                     self.move_right()
+            if key == 'escape':
+                self.menu.pause_menu(self)
 
     def jump(self):
         self.animate_y(self.y + 15,duration=.4)

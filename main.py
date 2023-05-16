@@ -16,9 +16,10 @@ window.fps_counter.disable()
 player = Player(collider = 'box',model = 'cube', position = (0, 0, 0))
 main_menu = Menu(player)
 ground = Entity(model = '/assets/tracks.glb', collider = 'box', scale = 0.67, position = (0,-7,50))
+player.menu = main_menu
+train = train_generator_init(player)
 
-
-#TODO pause menu, init train generator
+#TODO pause menu, init train generator, 3 poziomy, jedne,dwa,trzy,tory
 def update():
     print(player.position)
     if GameParameters.death == True and GameParameters.paused == False:

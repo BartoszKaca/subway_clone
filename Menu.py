@@ -68,3 +68,25 @@ class Menu(Entity):
         for key in self.buttons.keys():
             self.buttons[key].enable()
     def pause_menu(self, player):
+        GameParameters.paused = True
+        temp = player.position
+        player.rotation = (180,0,0)
+        player.position = (0,0,0)
+        back = Button(text = 'wroc do menu',position = (-0.65, .4), scale = (.4,.1), color = color.black)
+        restart = Button(text= 'restart', scale = (.4,.1), position = (-.65, .15),color = color.black)
+        resume = Button(text= 'restart', scale = (.4,.1), position = (-.65, -.25),color = color.black)
+        self.score_point.disable()
+        te = Text("pause", width=10, height=2,origin=(0,0), position = (0,0.2))
+        objects = (te, back, restart, resume)
+        back.on_click = lambda: Func(self.return_menu(player,objects))
+        restart.on_click = lambda: Func(GameParameters.restart(GameParameters, player, self,objects))
+        resume.on_click = lambda : Func(self.resume(player, objects, temp))
+        te.create_background()
+
+    def resume(self, player, objects, temp):
+        player.position = temp
+        player.rotation = (0,0,0)
+        GameParameters.paused = False
+        self.score_point.enable()
+        for i in objects:
+            i.disable()
