@@ -30,3 +30,6 @@ class GameParameters():
         for i in objects:
             i.disable()
         menu.score_point.enable()
+        self.paused = False
+
+

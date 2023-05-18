@@ -8,7 +8,7 @@ from train_spawner import *
 from Menu import *
 from screeninfo import get_monitors
 
-
+GameParameters.paused = True
 monitor = get_monitors()
 app = Ursina( fullscreen = True)
 window.size = Vec2(monitor[0].width, monitor[0].height)
@@ -19,7 +19,7 @@ ground = Entity(model = '/assets/tracks.glb', collider = 'box', scale = 0.67, po
 player.menu = main_menu
 train = train_generator_init(player)
 
-#TODO pause menu, init train generator, 3 poziomy, jedne,dwa,trzy,tory
+
 def update():
     print(player.position)
     if GameParameters.death == True and GameParameters.paused == False:
@@ -30,5 +30,5 @@ def update():
     GameParameters.speed += 0.01
     if(GameParameters.can_spawn == True):
         train = train_generator(player)
-Sky()
+Sky(texture = 'assets/night.jpg')
 app.run()

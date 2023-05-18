@@ -30,7 +30,7 @@ class Train(Entity):
         if (player.x == self.x and distance_z(player, self) <= 65 and distance_y(player, self) < 5 and GameParameters.paused == False):
             print("game over")
             self.disable()
-            GameParameters.paused = True
+            GameParameters.paused = False
             GameParameters.death = True
         elif (player.x == self.x and distance_z(player, self) <= 65 and distance_y(player, self) >= 5):
             if (player.y <= 8):
