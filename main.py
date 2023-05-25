@@ -1,34 +1,37 @@
-import GameParameters
+from GameParameters import *
 from ursina import *
 from Player import *
 from Train import *
-from ursina.prefabs.first_person_controller import FirstPersonController
-from ursina.prefabs.editor_camera import *
-from train_spawner import *
 from Menu import *
 from screeninfo import get_monitors
+from train_spawner import *
 
 GameParameters.paused = True
 monitor = get_monitors()
-app = Ursina( fullscreen = True)
+app = Ursina(fullscreen=True)
 window.size = Vec2(monitor[0].width, monitor[0].height)
 window.fps_counter.disable()
-player = Player(collider = 'box',model = 'cube', position = (0, 0, 0))
+player = Player(collider='box', model='cube', position=(0, 0, 0))
 main_menu = Menu(player)
-ground = Entity(model = '/assets/tracks.glb', collider = 'box', scale = 0.67, position = (0,-7,50))
+ground = Entity(model='/assets/tracks.glb', collider='box', scale=0.67, position=(0, -7, 50))
 player.menu = main_menu
-train = train_generator_init(player)
+GameParameters.train += train_generator_init(player)
 
 
 def update():
-    print(player.position)
     if GameParameters.death == True and GameParameters.paused == False:
+        for i in GameParameters.train:
+            i.disable()
+        GameParameters.train.clear()
         main_menu.death_menu(player)
     if GameParameters.paused == False:
         GameParameters.score += int(time.dt * 100)
         main_menu.score_point.text = "Score:" + str(GameParameters.score)
     GameParameters.speed += 0.01
-    if(GameParameters.can_spawn == True):
-        train = train_generator(player)
-Sky(texture = 'assets/night.jpg')
+    if (GameParameters.can_spawn == True and GameParameters.paused == False):
+        GameParameters.train += train_generator(player)
+        GameParameters.can_spawn = False
+
+
+Sky(texture='assets/night.jpg')
 app.run()

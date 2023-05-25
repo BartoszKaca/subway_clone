@@ -1,5 +1,6 @@
 from ursina import *
 from GameParameters import *
+from train_spawner import *
 
 class Menu(Entity):
     def __init__(self, player, **kwargs):
@@ -24,6 +25,10 @@ class Menu(Entity):
         GameParameters.score = 0
         GameParameters.can_spawn = True
         self.score_point.enable()
+        for i in GameParameters.train:
+            i.disable()
+        GameParameters.train.clear()
+        GameParameters.train += train_generator_init(player)
         for key in self.buttons.keys():
             self.buttons[key].disable()
     def controls(self,player):
@@ -59,7 +64,7 @@ class Menu(Entity):
         te = Text(desc, width=10, height=2,origin=(0,0), position = (0,0.2))
         objects = (te, back, restart)
         back.on_click = lambda: Func(self.return_menu(player,objects))
-        restart.on_click = lambda: Func(GameParameters.restart(GameParameters, player, self,objects))
+        restart.on_click = lambda: Func(self.restart(player, GameParameters,objects))
         te.create_background()
 
     def show_menu(self, player):
@@ -69,17 +74,19 @@ class Menu(Entity):
             self.buttons[key].enable()
     def pause_menu(self, player):
         GameParameters.paused = True
+        for i in GameParameters.train:
+            i.disable()
         temp = player.position
         player.rotation = (180,0,0)
         player.position = (0,0,0)
         back = Button(text = 'wroc do menu',position = (-0.65, .4), scale = (.4,.1), color = color.black)
         restart = Button(text= 'restart', scale = (.4,.1), position = (-.65, .15),color = color.black)
-        resume = Button(text= 'restart', scale = (.4,.1), position = (-.65, -.25),color = color.black)
+        resume = Button(text= 'wznow', scale = (.4,.1), position = (-.65, -.25),color = color.black)
         self.score_point.disable()
         te = Text("pause", width=10, height=2,origin=(0,0), position = (0,0.2))
         objects = (te, back, restart, resume)
         back.on_click = lambda: Func(self.return_menu(player,objects))
-        restart.on_click = lambda: Func(GameParameters.restart(GameParameters, player, self,objects))
+        restart.on_click = lambda: Func(self.restart(player, GameParameters,objects))
         resume.on_click = lambda : Func(self.resume(player, objects, temp))
         te.create_background()
 
@@ -88,5 +95,22 @@ class Menu(Entity):
         player.rotation = (0,0,0)
         GameParameters.paused = False
         self.score_point.enable()
+        for i in GameParameters.train:
+            i.enable()
         for i in objects:
             i.disable()
+
+    def restart(self, player, GameParameters, objects):
+        GameParameters.score = 0
+        GameParameters.can_spawn = True
+        GameParameters.speed = 20
+        for i in GameParameters.train:
+            i.disable()
+        GameParameters.train.clear()
+        player.position = (0, 0, 0)
+        player.rotation = (0, 0, 0)
+        for i in objects:
+            i.disable()
+        self.score_point.enable()
+        GameParameters.paused = False
+        GameParameters.train += train_generator_init(player)

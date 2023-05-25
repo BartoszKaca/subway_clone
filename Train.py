@@ -23,8 +23,6 @@ class Train(Entity):
         if self.z < 350 and self.changed == False:
             self.changed = True
             GameParameters.can_spawn = True
-        if GameParameters.death:
-            self.disable()
 
     def hit_info(self, player):
         if (player.x == self.x and distance_z(player, self) <= 65 and distance_y(player, self) < 5 and GameParameters.paused == False):
