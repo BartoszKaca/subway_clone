@@ -1,13 +1,13 @@
-import json
+
 
 def new_score(score):
     scores = []
-    f =open('score.txt', 'r')
+    f =open('assets/score.txt', 'r')
     for x in f.readlines():
         scores.append(x)
     f.close()
     scores.append(score)
-    with open('score.txt', 'w+') as f:
+    with open('assets/score.txt', 'w+') as f:
         for items in scores:
             f.write('%s\n' %items)
             print("Zapisano")

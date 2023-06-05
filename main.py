@@ -10,13 +10,13 @@ from high_scores import *
 GameParameters.paused = True
 monitor = get_monitors()
 app = Ursina(fullscreen=True)
-new_score(34)
 window.size = Vec2(monitor[0].width, monitor[0].height)
 window.fps_counter.disable()
 player = Player(collider='box', model='cube', position=(0, 0, 0))
 main_menu = Menu(player)
 for i in range(8):
-    ground = Entity(model='/assets/tracks.glb', collider='box', scale=0.67, position=(0, -7, 110 *i))
+    ground = Entity(model='/assets/tunele.glb', collider='box', scale=0.67, position=(0, -7, 110 *i))
+L = PointLight(y = 10, x = 0, z = 0, color = color.white, shadows = True)
 player.menu = main_menu
 GameParameters.train += train_generator_init(player)
 
@@ -36,5 +36,5 @@ def update():
         GameParameters.can_spawn = False
 
 
-Sky(texture='assets/images.jpg')
+Sky(texture='assets/night.jpg')
 app.run()
