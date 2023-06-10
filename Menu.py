@@ -1,6 +1,7 @@
 from ursina import *
 from GameParameters import *
 from train_spawner import *
+from high_scores import *
 
 class Menu(Entity):
     def __init__(self, player, **kwargs):
@@ -12,11 +13,14 @@ class Menu(Entity):
             'sterowanie':Button( text='Sterowanie', scale = (.4,.1), position = (-.65,0),color=color.black),
             'wyjdź':Button(text='Wyjdź', scale = (.4,.1), position = (-.65,-.15), color=color.black),
             'title': Text(text='Train Surfers', position=(.15, .30), font="assets/MoiraiOne-Regular.ttf", size=30,
-                          scale=3.2)
+                          scale=3.2),
+            'high-scores':Text(text="Najwyższe wyniki: \n"+get_score_list(), position = (.15,.0), font = 'assets/GasoekOne-Regular.ttf'),
+            'erase-high-scores':Button(text="Wyczyść tablicę wyników", position = (.35, -.27), scale = (.4,.1), color = color.black, )
             }
         self.buttons['start'].on_click=lambda:Func(self.close_menu(player))
         self.buttons['sterowanie'].on_click=lambda :Func(self.controls(player))
         self.buttons['wyjdź'].on_click=lambda:application.quit()
+        self.buttons['erase-high-scores'].on_click = lambda:Func(erase_high_scores())
         self.buttons['start'].text_entity.font  = "assets/GasoekOne-Regular.ttf"
         self.buttons['sterowanie'].text_entity.font = "assets/GasoekOne-Regular.ttf"
         self.buttons['wyjdź'].text_entity.font = "assets/GasoekOne-Regular.ttf"
@@ -68,10 +72,18 @@ class Menu(Entity):
         back.text_entity.font  = "assets/GasoekOne-Regular.ttf"
         restart.text_entity.font = "assets/GasoekOne-Regular.ttf"
         self.score_point.disable()
-        desc = (
-            "Game Over!\n"
-            'Wynik: ' + str(GameParameters.score)
-        )
+        new_score(GameParameters.score)
+        if int(GameParameters.score) == int(get_high_score()):
+            desc = (
+                "Game Over!\n"
+                'Wynik: ' + str(GameParameters.score) + "\n"
+                "To jest nowy rekord!"
+            )
+        else:
+            desc = (
+                    "Game Over!\n"
+                    'Wynik: ' + str(GameParameters.score) + "\n"
+            )
         te = Text(desc, width=10, height=2,origin=(0,0), position = (0,0.2), font  = "assets/GasoekOne-Regular.ttf")
         objects = (te, back, restart)
         back.on_click = lambda: Func(self.return_menu(player,objects))
@@ -132,3 +144,5 @@ class Menu(Entity):
         GameParameters.paused = False
         GameParameters.train += train_generator_init(player)
         mouse.visible = False
+    def update(self):
+        self.buttons['high-scores'].text = "Najwyższe wyniki: \n"+get_score_list()
