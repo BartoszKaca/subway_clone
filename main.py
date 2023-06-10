@@ -21,6 +21,8 @@ for i in range(8):
 L = PointLight(y = 10, x = 0, z = 0, color = color.white, shadows = True)
 player.menu = main_menu
 GameParameters.train += train_generator_init(player)
+Audio.volume_multiplier = 0.5
+
 def update():
     if GameParameters.death == True and GameParameters.paused == False:
         for i in GameParameters.train:

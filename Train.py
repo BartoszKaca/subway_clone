@@ -26,7 +26,6 @@ class Train(Entity):
 
     def hit_info(self, player):
         if (player.x == self.x and distance_z(player, self) <= 65 and distance_y(player, self) < 5 and GameParameters.paused == False):
-            print("game over")
             self.disable()
             GameParameters.paused = False
             GameParameters.death = True

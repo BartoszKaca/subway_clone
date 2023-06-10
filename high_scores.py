@@ -37,7 +37,7 @@ def get_score_list():
         for i in range(1,6):
             effect += "\n"+str(i)+". "+str(scores[i*-1])
     else:
-        for i in range(1,len(scores)):
+        for i in range(1,len(scores)+1):
             effect += "\n"+str(i)+". "+str(scores[i*-1])
     return effect
 def erase_high_scores():
