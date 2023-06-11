@@ -4,11 +4,15 @@ from train_spawner import *
 from high_scores import *
 
 class Menu(Entity):
+    #klasa główna menu
     def __init__(self, player, **kwargs):
         super().__init__(parent = camera.ui, ignore_paused = True)
+        #tło menu
         self.background = Sprite('assets/menu_background.png', z = -8.9,y =-1, rotation = (180,0,0))
+        #muzyka z głównego menu
         self.menu_music = Audio('assets/menu.mp3', autoplay=True, loop = True, volume = Audio.volume_multiplier)
         player.rotation = (180,0,0)
+        #przyciski, tytuł i tabela wynikó
         self.buttons = {
             'start':Button(text= 'Start', scale = (.4,.1), position = (-.65, .15),color = color.black),
             'sterowanie':Button( text='Sterowanie', scale = (.4,.1), position = (-.65,0),color=color.black),
@@ -27,10 +31,11 @@ class Menu(Entity):
         self.buttons['start'].text_entity.font  = "assets/GasoekOne-Regular.ttf"
         self.buttons['sterowanie'].text_entity.font = "assets/GasoekOne-Regular.ttf"
         self.buttons['wyjdź'].text_entity.font = "assets/GasoekOne-Regular.ttf"
+        #licznik punktów
         self.score_point = Text('Score:' + str(GameParameters.score), width=10, height=2, position=(-.09, .4),font  = "assets/BebasNeue-Regular.ttf", scale = 2)
         self.score_point.disable()
         mouse.visible = True
-
+    #zamykanie menu i przechodzenie do gry
     def close_menu(self, player):
         self.menu_music.stop()
         self.game_music = Audio('assets/game.mp3', autoplay=True, loop = True, volume = Audio.volume_multiplier)
@@ -47,6 +52,7 @@ class Menu(Entity):
         for key in self.buttons.keys():
             self.buttons[key].disable()
         mouse.visible = False
+    #wyświetalnie informacji o sterowaniu
     def controls(self,player):
         for key in self.buttons.keys():
             self.buttons[key].disable()
@@ -62,12 +68,15 @@ class Menu(Entity):
         objects = (te,back)
         back.on_click= lambda: Func(self.return_menu(player, objects))
         mouse.visible = True
+    #powrót do menu
     def return_menu(self, player, objects):
         if self.menu_music.playing == 0:
             self.menu_music.play(0)
         for i in objects:
             i.disable()
+        #wyświetlanie menu
         self.show_menu(player)
+    #menu po śmierci
     def death_menu(self, player):
         self.die_effect = Audio('assets/Crash.mp3', volume = Audio.volume_multiplier)
         self.game_music.stop()
@@ -82,7 +91,8 @@ class Menu(Entity):
         restart.text_entity.font = "assets/GasoekOne-Regular.ttf"
         self.score_point.disable()
         new_score(GameParameters.score)
-        if int(GameParameters.score) == int(get_high_score()):
+        #jeśli gracz osiągnął największy wynik wyświetla się odpowiednia informacja
+        if int(GameParameters.score) >= int(get_high_score()):
             desc = (
                 "Game Over!\n"
                 'Wynik: ' + str(GameParameters.score) + "\n"
@@ -98,13 +108,14 @@ class Menu(Entity):
         back.on_click = lambda: Func(self.return_menu(player,objects))
         restart.on_click = lambda: Func(self.restart(player, GameParameters,objects))
         mouse.visible = True
-
+    #wyświetlanie menu po powrocie do niego
     def show_menu(self, player):
         player.rotation = (180, 0, 0)
         GameParameters.paused = True
         for key in self.buttons.keys():
             self.buttons[key].enable()
         mouse.visible = True
+    #menu pauzy
     def pause_menu(self, player):
         self.pause_music = Audio('assets/pause.mp3', loop = True, autoplay= True, volume = Audio.volume_multiplier)
         self.game_music.stop()
@@ -128,7 +139,7 @@ class Menu(Entity):
         restart.on_click = lambda: Func(self.restart(player, GameParameters,objects), self.pause_music.stop())
         resume.on_click = lambda : Func(self.resume(player, objects, temp),self.game_music.play(0))
         mouse.visible = True
-
+    #wznawianie gry z menu pauzy
     def resume(self, player, objects, temp):
         self.pause_music.stop()
         player.position = temp
@@ -140,7 +151,7 @@ class Menu(Entity):
         for i in objects:
             i.disable()
         mouse.visible = False
-
+    #restartowanie gry po śmierci i z menu pauzy
     def restart(self, player, GameParameters, objects):
         self.game_music.resume()
         self.game_music.stop()
@@ -159,6 +170,7 @@ class Menu(Entity):
         GameParameters.paused = False
         GameParameters.train += train_generator_init(player)
         mouse.visible = False
+    #wyciszanie/odciszanie muzyki
     def mute(self):
         if Audio.volume_multiplier == .5:
             Audio.volume_multiplier = 0
@@ -168,5 +180,6 @@ class Menu(Entity):
             Audio.volume_multiplier = .5
             self.menu_music.volume = Audio.volume_multiplier
             self.buttons['volume-control'].icon = 'assets/mute_off.png'
+    #aktualizowanie tablicy wyników w menu głównym
     def update(self):
         self.buttons['high-scores'].text = "Najwyższe wyniki: \n"+get_score_list()

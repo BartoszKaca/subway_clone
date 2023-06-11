@@ -1,5 +1,4 @@
 #importowanie wszystkich potrzebnych bibliotek i plików
-import GameParameters
 from GameParameters import *
 from ursina import *
 from Player import *
@@ -45,6 +44,6 @@ def update():
         GameParameters.train += train_generator(player)
         GameParameters.can_spawn = False
 
-
+#tekstura nieba
 Sky(texture='assets/night.jpg')
 app.run()
