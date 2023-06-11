@@ -125,7 +125,7 @@ class Menu(Entity):
         t2 = Text("Wynik: "+ str(GameParameters.score), width=10, height=2,origin=(0,0), position = (0,.1),font  = "assets/BebasNeue-Regular.ttf", scale = 1.5)
         objects = (te, back, restart, resume,t2)
         back.on_click = lambda: Func(self.return_menu(player,objects), self.pause_music.stop())
-        restart.on_click = lambda: Func(self.restart(player, GameParameters,objects))
+        restart.on_click = lambda: Func(self.restart(player, GameParameters,objects), self.pause_music.stop())
         resume.on_click = lambda : Func(self.resume(player, objects, temp),self.game_music.play(0))
         mouse.visible = True
 
@@ -142,7 +142,6 @@ class Menu(Entity):
         mouse.visible = False
 
     def restart(self, player, GameParameters, objects):
-        self.pause_music.stop()
         self.game_music.resume()
         self.game_music.stop()
         self.game_music.play(0)

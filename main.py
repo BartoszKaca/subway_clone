@@ -1,5 +1,3 @@
-import GameParameters
-
 from GameParameters import *
 from ursina import *
 from Player import *
