@@ -3,6 +3,7 @@ import GameParameters
 from ursina import *
 from GameParameters import *
 from Player import *
+from high_scores import *
 
 class Train(Entity):
     def __init__(self, **kwargs):
